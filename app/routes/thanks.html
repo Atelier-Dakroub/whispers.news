@@ -1,0 +1,92 @@
+<script server>
+  // Where Polar sends a buyer after checkout. Set it as the success URL on the
+  // product: https://whispers.news/thanks
+  //
+  // A page rather than Polar's own confirmation screen, because the last thing
+  // somebody sees after paying should say what they now have and where to go
+  // next — and because the answer here is unusual enough to be worth saying
+  // plainly. There is nothing to unlock. They already had the code.
+  export default async ({ layout }) => ({ repo: layout.repo });
+</script>
+
+<title>Thank you — Whispers</title>
+<meta name="description" content="Your commercial license for Whispers." />
+<!-- A page only reachable after paying, and one that says nothing a search
+     result should carry. -->
+<meta name="robots" content="noindex" />
+
+<div class="wrap">
+  <section class="hero" style="grid-template-columns: 1fr">
+    <div>
+      <p class="slug">Order complete</p>
+      <h1>You own it</h1>
+      <p class="lede">
+        Your commercial license is in effect from now, for unlimited sites, and
+        it does not expire. Polar is sending the receipt and invoice to the
+        address you paid with.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-fill" href="${repo}" rel="noopener">Clone the repository</a>
+        <a class="btn btn-line" href="${repo}#readme" rel="noopener">Read the setup guide</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="band band-stock">
+  <div class="wrap">
+    <p class="slug">What happens now</p>
+    <h2>Nothing to unlock</h2>
+    <p class="band-intro">
+      There is no key to enter, no account to activate and nothing counting your
+      installs — which means there is also nothing that can stop working. The
+      code you clone is the same code everybody clones. What you bought is the
+      right to run it commercially, and the invoice that proves it.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-n">01</span>
+        <div>
+          <h3>Clone it</h3>
+          <p>
+            <a href="${repo}" rel="noopener">github.com/Atelier-Dakroub/whispers</a>
+            — then <code>npm install</code>, <code>npm run db:migrate</code> and
+            <code>npm run dev</code>. Open it and the first visitor claims the
+            site.
+          </p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-n">02</span>
+        <div>
+          <h3>Keep the invoice</h3>
+          <p>
+            Polar emails it. That receipt is your license record — file it
+            wherever your accounts live. You will not be asked for it by the
+            software.
+          </p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-n">03</span>
+        <div>
+          <h3>Turn off the credit, if you like</h3>
+          <p>
+            The footer says “Powered by Whispers” by default. The personal
+            license asks you to keep it; yours does not. It is a switch in
+            <strong>Settings</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p class="band-intro" style="margin-top: 2rem">
+      Something wrong with the order, or a question about the terms? Write to
+      <a href="mailto:admin@dakroub.co">admin@dakroub.co</a> and it reaches a
+      person. The full terms are in
+      <a href="${repo}/blob/main/LICENSE.md" rel="noopener">LICENSE.md</a>.
+    </p>
+  </div>
+</section>

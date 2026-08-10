@@ -22,7 +22,9 @@ export default {
 
   // What `ctx.absolute()` resolves against: og:image, canonical, the sitemap.
   metadataBase: 'https://whispers.news',
-  sitemap: { hostname: 'https://whispers.news' },
+  // `/thanks` carries `noindex`, and a sitemap is a request to index — listing
+  // it there would be the site contradicting itself in two files.
+  sitemap: { hostname: 'https://whispers.news', exclude: ['/thanks'] },
 
   outDir: 'dist',
   typesFile: 'app/transclude-env.d.ts',

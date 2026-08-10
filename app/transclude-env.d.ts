@@ -66,6 +66,41 @@ export type RootLayoutData = {
   wire: string[];
 };
 
+/** The `ctx` argument of `thanks`'s <script server> loader. */
+export type ThanksContext = {
+  url: string;
+  params: {};
+  route: {
+    id: string;
+    pattern: string;
+    path: string
+  };
+  layout: {
+    year: number;
+    repo: string;
+    siteRepo: string;
+    buy: string;
+    wire: string[];
+  };
+  request: Request | null;
+  fragment: string | null;
+  action: unknown;
+  response: {
+    status: number;
+    headers: Headers
+  };
+  cookies: __Cookies;
+  htmlAttrs: Record<string, string | boolean | null>;
+  absolute: (path: string) => string;
+  revalidateTag: (tag: string) => void;
+  after: (work: Promise<unknown>) => void
+};
+
+/** Data returned by `thanks`'s <script server> block. */
+export type ThanksData = {
+  repo: string;
+};
+
 /** The `ctx` argument of `index`'s <script server> loader. */
 export type IndexContext = {
   url: string;

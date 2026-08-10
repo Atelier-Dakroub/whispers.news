@@ -1,0 +1,23 @@
+{
+  // The marketing site. The product it sells is a separate worker — see
+  // ../whispers/wrangler.jsonc — and the two must not share a name.
+  "name": "whispers-news",
+  "compatibility_date": "2026-01-01",
+
+  // No "main". Every page here is prerendered, so this is a static asset
+  // worker: Cloudflare serves the files and no script runs per request.
+  "assets": {
+    "directory": "./dist/site",
+    // Serve the built 404 page rather than Cloudflare's own.
+    "not_found_handling": "404-page",
+    // Matches `trailingSlash: 'never'` in transclude.config.js. Cloudflare's
+    // default adds the slash instead, which would answer the canonical /thanks
+    // — the URL Polar returns buyers to — with a redirect.
+    "html_handling": "drop-trailing-slash"
+  },
+
+  "observability": { "enabled": true }
+
+  // The address, once the zone is on this account:
+  // "routes": [{ "pattern": "whispers.news", "custom_domain": true }]
+}

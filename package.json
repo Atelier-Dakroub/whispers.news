@@ -7,13 +7,16 @@
     "build": "transclude-build",
     "start": "node --env-file-if-exists=.env node_modules/.bin/transclude-serve",
     "preview": "npm run build && npm start",
-    "check": "transclude-check"
+    "check": "transclude-check",
+    "bundle": "node scripts/bundle-static.js",
+    "deploy": "npm run build && npm run bundle && wrangler deploy"
   },
   "dependencies": {
     "@transclude/core": "^0.10.0"
   },
   "devDependencies": {
     "typescript": "^5.9",
-    "vite": "^8"
+    "vite": "^8",
+    "wrangler": "^4.115.0"
   }
 }

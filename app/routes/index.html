@@ -16,118 +16,148 @@
   // picks one and buys gets exactly this, contrast included.
   const PRESETS = [
     {
-      id: 'wire',
-      name: 'Wire',
-      note: 'The shipped default. Transitional serif, day headings, sources and times.',
-      bg: '#fbfaf7',
-      ink: '#16150f',
-      link: '#1c3f8f',
-      muted: '#8a8883',
-      ruleColor: '#dedcd9',
+      id: "wire",
+      name: "Wire",
+      note: "The shipped default. Transitional serif, day headings, sources and times.",
+      bg: "#fbfaf7",
+      ink: "#16150f",
+      link: "#1c3f8f",
+      muted: "#8a8883",
+      ruleColor: "#dedcd9",
       head: "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif",
-      ui: 'system-ui, sans-serif',
-      lead: '1.35',
-      pad: '0.62rem',
-      day: 'block',
-      src: 'inline',
-      atShort: 'inline',
-      atLong: 'none',
-      rule: '1px',
+      ui: "system-ui, sans-serif",
+      lead: "1.35",
+      pad: "0.62rem",
+      day: "block",
+      src: "inline",
+      atShort: "inline",
+      atLong: "none",
+      rule: "1px",
     },
     {
-      id: 'broadsheet',
-      name: 'Broadsheet',
-      note: 'Newsprint and a Didone. Relaxed, everything on.',
-      bg: '#f4efe2',
-      ink: '#211c14',
-      link: '#8a2b12',
-      muted: '#807a70',
-      ruleColor: '#d6d1c4',
+      id: "broadsheet",
+      name: "Broadsheet",
+      note: "Newsprint and a Didone. Relaxed, everything on.",
+      bg: "#f4efe2",
+      ink: "#211c14",
+      link: "#8a2b12",
+      muted: "#807a70",
+      ruleColor: "#d6d1c4",
       head: "Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif",
       ui: "'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif",
-      lead: '1.5',
-      pad: '0.95rem',
-      day: 'block',
-      src: 'inline',
-      atShort: 'inline',
-      atLong: 'none',
-      rule: '1px',
+      lead: "1.5",
+      pad: "0.95rem",
+      day: "block",
+      src: "inline",
+      atShort: "inline",
+      atLong: "none",
+      rule: "1px",
     },
     {
-      id: 'bulletin',
-      name: 'Bulletin',
-      note: 'Rounded sans on cool paper. Compact, no rules, no times.',
-      bg: '#eef2f6',
-      ink: '#14202b',
-      link: '#0b6660',
-      muted: '#757f87',
-      ruleColor: '#cfd4da',
+      id: "bulletin",
+      name: "Bulletin",
+      note: "Rounded sans on cool paper. Compact, no rules, no times.",
+      bg: "#eef2f6",
+      ink: "#14202b",
+      link: "#0b6660",
+      muted: "#757f87",
+      ruleColor: "#cfd4da",
       head: "ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif",
       ui: "Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif",
-      lead: '1.2',
-      pad: '0.4rem',
-      day: 'block',
-      src: 'inline',
-      atShort: 'none',
-      atLong: 'none',
-      rule: '0',
+      lead: "1.2",
+      pad: "0.4rem",
+      day: "block",
+      src: "inline",
+      atShort: "none",
+      atLong: "none",
+      rule: "0",
     },
     {
-      id: 'signal',
-      name: 'Signal',
-      note: 'Condensed on navy. No day headings, so each line carries its date.',
-      bg: '#0d1b2a',
-      ink: '#e9eff7',
-      link: '#ffc42f',
-      muted: '#acb5bf',
-      ruleColor: '#4a5765',
+      id: "signal",
+      name: "Signal",
+      note: "Condensed on navy. No day headings, so each line carries its date.",
+      bg: "#0d1b2a",
+      ink: "#e9eff7",
+      link: "#ffc42f",
+      muted: "#acb5bf",
+      ruleColor: "#4a5765",
       head: "Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif",
       ui: "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
-      lead: '1.2',
-      pad: '0.4rem',
-      day: 'none',
-      src: 'inline',
-      atShort: 'none',
-      atLong: 'inline',
-      rule: '1px',
+      lead: "1.2",
+      pad: "0.4rem",
+      day: "none",
+      src: "inline",
+      atShort: "none",
+      atLong: "inline",
+      rule: "1px",
     },
     {
-      id: 'riot',
-      name: 'Riot',
-      note: 'Headlines and nothing else. Monospace on black.',
-      bg: '#000000',
-      ink: '#f2f2f2',
-      link: '#27e59c',
-      muted: '#b1b1b0',
-      ruleColor: '#525252',
+      id: "riot",
+      name: "Riot",
+      note: "Headlines and nothing else. Monospace on black.",
+      bg: "#000000",
+      ink: "#f2f2f2",
+      link: "#27e59c",
+      muted: "#b1b1b0",
+      ruleColor: "#525252",
       head: "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
       ui: "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
-      lead: '1.5',
-      pad: '0.95rem',
-      day: 'none',
-      src: 'none',
-      atShort: 'none',
-      atLong: 'none',
-      rule: '0',
+      lead: "1.5",
+      pad: "0.95rem",
+      day: "none",
+      src: "none",
+      atShort: "none",
+      atLong: "none",
+      rule: "0",
     },
   ];
 
   // The sample front page. Two days, so the day headings have something to do.
   const DAYS = [
     {
-      label: 'Today',
+      label: "Today",
       items: [
-        { head: 'Council votes 6–1 to keep the ferry running through winter', src: 'County Record', at: '14:20', on: 'Aug 9, 14:20' },
-        { head: 'Dredging permit clears final review after a two-year wait', src: 'Coast Weekly', at: '11:05', on: 'Aug 9, 11:05' },
-        { head: 'Fishermen’s co-op buys the old cannery site', src: 'Harbor Report', at: '08:47', on: 'Aug 9, 08:47' },
+        {
+          head: "Council votes 6–1 to keep the ferry running through winter",
+          src: "County Record",
+          at: "14:20",
+          on: "Aug 9, 14:20",
+        },
+        {
+          head: "Dredging permit clears final review after a two-year wait",
+          src: "Coast Weekly",
+          at: "11:05",
+          on: "Aug 9, 11:05",
+        },
+        {
+          head: "Fishermen’s co-op buys the old cannery site",
+          src: "Harbor Report",
+          at: "08:47",
+          on: "Aug 9, 08:47",
+        },
       ],
     },
     {
-      label: 'Yesterday',
+      label: "Yesterday",
       items: [
-        { head: 'School board sets a hearing on the bond measure', src: 'County Record', at: '17:32', on: 'Aug 8, 17:32' },
-        { head: 'Storm damage closes the north jetty walkway', src: 'Marine Bulletin', at: '09:14', on: 'Aug 8, 09:14' },
-        { head: 'What the new dock fees actually cost a small boat', src: 'Analysis', at: '07:50', on: 'Aug 8, 07:50' },
+        {
+          head: "School board sets a hearing on the bond measure",
+          src: "County Record",
+          at: "17:32",
+          on: "Aug 8, 17:32",
+        },
+        {
+          head: "Storm damage closes the north jetty walkway",
+          src: "Marine Bulletin",
+          at: "09:14",
+          on: "Aug 8, 09:14",
+        },
+        {
+          head: "What the new dock fees actually cost a small boat",
+          src: "Analysis",
+          at: "07:50",
+          on: "Aug 8, 07:50",
+        },
       ],
     },
   ];
@@ -149,7 +179,10 @@
   content="A one-page headline site for niche news. Post a link in seconds, host it anywhere, own the source. Free for personal sites, $99 once for commercial use."
 />
 <link rel="canonical" href="https://whispers.news/" />
-<meta property="og:title" content="Whispers — a headline-only news site you own" />
+<meta
+  property="og:title"
+  content="Whispers — a headline-only news site you own"
+/>
 <meta
   property="og:description"
   content="Post a link in seconds. Host it anywhere. Own the source. Free for personal sites, $99 once for commercial use."
@@ -221,7 +254,22 @@
       <div
         class="paper"
         id="paper"
-        style="--d-bg: ${first.bg}; --d-ink: ${first.ink}; --d-link: ${first.link}; --d-muted: ${first.muted}; --d-rule: ${first.ruleColor}; --d-head: ${first.head}; --d-ui: ${first.ui}; --d-lead: ${first.lead}; --d-pad: ${first.pad}; --d-day: ${first.day}; --d-src: ${first.src}; --d-at-short: ${first.atShort}; --d-at-long: ${first.atLong}; --d-rule-w: ${first.rule}"
+        style="
+          --d-bg: ${first.bg};
+          --d-ink: ${first.ink};
+          --d-link: ${first.link};
+          --d-muted: ${first.muted};
+          --d-rule: ${first.ruleColor};
+          --d-head: ${first.head};
+          --d-ui: ${first.ui};
+          --d-lead: ${first.lead};
+          --d-pad: ${first.pad};
+          --d-day: ${first.day};
+          --d-src: ${first.src};
+          --d-at-short: ${first.atShort};
+          --d-at-long: ${first.atLong};
+          --d-rule-w: ${first.rule};
+        "
       >
         <div class="paper-head">
           <div class="paper-name">Harbor Report</div>
@@ -291,8 +339,9 @@
         <p>
           Eight colors, two font stacks, light and dark, reading density, day
           headings on or off — all from the admin, with a live preview. It
-          measures what you pick with APCA and tells you when a pair is hard to
-          read, then saves it anyway if that is what you want.
+          measures what you pick with
+          <a href="https://apcacontrast.com/" rel="noopener">APCA</a> and tells you when a pair
+          is hard to read, then saves it anyway if that is what you want.
         </p>
       </div>
       <div class="fact">
@@ -439,7 +488,12 @@
         makes the upgrade free.
       </p>
       <div>
-        <a class="btn btn-line btn-wide" href="https://github.com/Atelier-Dakroub/whispers" rel="noopener">Clone it free</a>
+        <a
+          class="btn btn-line btn-wide"
+          href="https://github.com/Atelier-Dakroub/whispers"
+          rel="noopener"
+          >Clone it free</a
+        >
       </div>
       <div><a class="btn btn-fill btn-wide" href="${buy}">Buy — $99</a></div>
     </div>
@@ -551,32 +605,32 @@
   // The demo's only job: write the same custom properties the product's admin
   // writes. Without it the page still shows a real front page in the first
   // preset, server-rendered — the chips are the enhancement, not the content.
-  const paper = document.getElementById('paper');
-  const chips = [...document.querySelectorAll('.chip')];
+  const paper = document.getElementById("paper");
+  const chips = [...document.querySelectorAll(".chip")];
 
   /** Attribute on the chip -> custom property on the paper. */
   const TOKENS = {
-    bg: '--d-bg',
-    ink: '--d-ink',
-    link: '--d-link',
-    muted: '--d-muted',
-    rulec: '--d-rule',
-    head: '--d-head',
-    ui: '--d-ui',
-    lead: '--d-lead',
-    pad: '--d-pad',
-    day: '--d-day',
-    src: '--d-src',
-    atshort: '--d-at-short',
-    atlong: '--d-at-long',
-    rule: '--d-rule-w',
+    bg: "--d-bg",
+    ink: "--d-ink",
+    link: "--d-link",
+    muted: "--d-muted",
+    rulec: "--d-rule",
+    head: "--d-head",
+    ui: "--d-ui",
+    lead: "--d-lead",
+    pad: "--d-pad",
+    day: "--d-day",
+    src: "--d-src",
+    atshort: "--d-at-short",
+    atlong: "--d-at-long",
+    rule: "--d-rule-w",
   };
 
-  const note = document.getElementById('demo-note-text');
+  const note = document.getElementById("demo-note-text");
 
   if (paper) {
     for (const chip of chips) {
-      chip.addEventListener('click', () => {
+      chip.addEventListener("click", () => {
         for (const [key, property] of Object.entries(TOKENS)) {
           const value = chip.dataset[key];
           if (value) paper.style.setProperty(property, value);
@@ -585,7 +639,7 @@
         if (note && chip.dataset.note) note.textContent = chip.dataset.note;
 
         for (const other of chips) {
-          other.setAttribute('aria-pressed', String(other === chip));
+          other.setAttribute("aria-pressed", String(other === chip));
         }
       });
     }

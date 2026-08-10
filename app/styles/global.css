@@ -19,7 +19,6 @@
   /* Lc 30 against paper. A row divider is structure, not decoration: it is the
      only thing separating one line of a pricing table from the next. */
   --rule: #c7c7c4;
-  --wire: #1a0dab;
   /* Kept exactly as it was, and deliberately not darkened. Every color here is
      APCA-checked, and this red reaches Lc 90 on white only as a maroon — which
      is not a warning color any more. So it is never used for small text: it
@@ -69,8 +68,25 @@ body {
   line-height: 1.55;
 }
 
+/* Body links are ink with a red underline, not blue.
+
+   The accent lives in the underline because it cannot live in the text: the red
+   reaches APCA Lc 68 on the stock band, under the 75 body text needs, so
+   coloring a link with it would drop half the prose on this page below the bar.
+   As decoration it only has to clear 30, and it clears 75.
+
+   An underline is also a non-color cue, which is what tells somebody a link is
+   a link when the two colors look alike to them. */
 a {
-  color: var(--wire);
+  color: var(--ink);
+  text-decoration-color: var(--flash);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration-thickness: 3px;
 }
 
 :focus-visible {

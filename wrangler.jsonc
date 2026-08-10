@@ -16,8 +16,12 @@
     "html_handling": "drop-trailing-slash"
   },
 
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
 
-  // The address, once the zone is on this account:
-  // "routes": [{ "pattern": "whispers.news", "custom_domain": true }]
+  "routes": [{ "pattern": "whispers.news", "custom_domain": true }],
+
+  // Declaring a route turns the workers.dev address off by default. Kept on
+  // deliberately: it is the way in when the domain is mid-cutover or its DNS is
+  // wrong, which is exactly when a second address is worth having.
+  "workers_dev": true
 }

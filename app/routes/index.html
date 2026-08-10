@@ -6,11 +6,19 @@
   // They reach the browser as data attributes on the chips rather than as a
   // JSON block, so the values are written once, here, and the script reads
   // them back off the element it was clicked on.
+  // Five starting points, and they differ in every axis the admin exposes: the
+  // ground, the ink, the link, both font stacks, the density, and which of the
+  // day headings, sources, times and rules are switched on.
+  //
+  // Every font stack here is copied from the product's own `app/lib/fonts.js`,
+  // and every palette is checked with the same APCA measure the admin uses —
+  // ink and links clear Lc 75, the muted meta clears 60 — so a visitor who
+  // picks one and buys gets exactly this, contrast included.
   const PRESETS = [
     {
       id: 'wire',
       name: 'Wire',
-      note: 'Everything on. Serif, day headings, sources, times.',
+      note: 'The shipped default. Transitional serif, day headings, sources and times.',
       bg: '#fbfaf7',
       ink: '#16150f',
       link: '#1c3f8f',
@@ -27,18 +35,37 @@
       rule: '1px',
     },
     {
-      id: 'night',
-      name: 'Night',
-      note: 'Dark, no rules between lines, no times. Relaxed.',
-      bg: '#0e1116',
-      ink: '#e6e9ef',
-      link: '#b2cdff',
-      muted: '#afb2b8',
-      ruleColor: '#505459',
-      head: "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif",
-      ui: 'system-ui, sans-serif',
+      id: 'broadsheet',
+      name: 'Broadsheet',
+      note: 'Newsprint and a Didone. Relaxed, everything on.',
+      bg: '#f4efe2',
+      ink: '#211c14',
+      link: '#8a2b12',
+      muted: '#807a70',
+      ruleColor: '#d6d1c4',
+      head: "Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif",
+      ui: "'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif",
       lead: '1.5',
       pad: '0.95rem',
+      day: 'block',
+      src: 'inline',
+      atShort: 'inline',
+      atLong: 'none',
+      rule: '1px',
+    },
+    {
+      id: 'bulletin',
+      name: 'Bulletin',
+      note: 'Rounded sans on cool paper. Compact, no rules, no times.',
+      bg: '#eef2f6',
+      ink: '#14202b',
+      link: '#0b6660',
+      muted: '#757f87',
+      ruleColor: '#cfd4da',
+      head: "ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif",
+      ui: "Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif",
+      lead: '1.2',
+      pad: '0.4rem',
       day: 'block',
       src: 'inline',
       atShort: 'none',
@@ -46,16 +73,16 @@
       rule: '0',
     },
     {
-      id: 'civic',
-      name: 'Civic',
-      note: 'No day headings, so each line carries its own date. Compact sans.',
-      bg: '#ffffff',
-      ink: '#1d2a3a',
-      link: '#0f5a8f',
-      muted: '#888f99',
-      ruleColor: '#dfe1e4',
-      head: "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
-      ui: 'system-ui, sans-serif',
+      id: 'signal',
+      name: 'Signal',
+      note: 'Condensed on navy. No day headings, so each line carries its date.',
+      bg: '#0d1b2a',
+      ink: '#e9eff7',
+      link: '#ffc42f',
+      muted: '#acb5bf',
+      ruleColor: '#4a5765',
+      head: "Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif",
+      ui: "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
       lead: '1.2',
       pad: '0.4rem',
       day: 'none',
@@ -67,14 +94,14 @@
     {
       id: 'riot',
       name: 'Riot',
-      note: 'Headlines and nothing else. No headings, sources, times or rules.',
-      bg: '#101010',
+      note: 'Headlines and nothing else. Monospace on black.',
+      bg: '#000000',
       ink: '#f2f2f2',
-      link: '#2de69f',
-      muted: '#b2b2b1',
-      ruleColor: '#545353',
+      link: '#27e59c',
+      muted: '#b1b1b0',
+      ruleColor: '#525252',
       head: "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
-      ui: "ui-monospace, 'Cascadia Code', Menlo, monospace",
+      ui: "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
       lead: '1.5',
       pad: '0.95rem',
       day: 'none',
@@ -159,7 +186,7 @@
          would get. -->
     <div class="demo-shell" id="demo">
       <div class="demo-bar">
-        <span class="slug">Your front page — these are starting points</span>
+        <span class="slug">Your front page — five starting points</span>
         <div class="chips" role="group" aria-label="Preview theme">
           <!-- Each chip carries its own preset. The values live in one place —
                the loader — and reach the script as data attributes, so there is
@@ -227,9 +254,10 @@
            four themes you get to choose between. They are four saves. -->
       <p class="demo-note">
         <b id="demo-note-text">${first.note}</b>
-        Not four themes — four saves. Day headings, sources, times, the rules
-        between lines, the spacing, every color and both fonts are fields in
-        your admin. Set your own and it will look like nothing on this page.
+        Not five themes — five saves. The ground, the ink, the links, both
+        typefaces, the spacing, and whether there are day headings, sources,
+        times or rules at all: every one is a field in your admin. Set your own
+        and it will look like nothing on this page.
       </p>
     </div>
   </section>

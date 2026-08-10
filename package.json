@@ -9,7 +9,8 @@
     "preview": "npm run build && npm start",
     "check": "transclude-check",
     "bundle": "node scripts/bundle-static.js",
-    "deploy": "npm run build && npm run bundle && wrangler deploy"
+    "deploy": "npm run build && npm run bundle && wrangler deploy",
+    "deploy:www": "wrangler deploy -c wrangler.www.jsonc"
   },
   "dependencies": {
     "@transclude/core": "^0.10.0"

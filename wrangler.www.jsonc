@@ -1,0 +1,16 @@
+{
+  // Only the www redirect. The site itself is wrangler.jsonc, and keeping the
+  // two apart is what lets that one stay a static asset worker.
+  "name": "whispers-news-www",
+  "main": "redirect-www.js",
+  "compatibility_date": "2026-01-01",
+
+  "observability": { "enabled": true },
+
+  // No "workers_dev": this worker has nothing to serve at an address of its
+  // own, and one that redirected to the apex from workers.dev would only be a
+  // confusing thing to find.
+  "workers_dev": false,
+
+  "routes": [{ "pattern": "www.whispers.news", "custom_domain": true }]
+}

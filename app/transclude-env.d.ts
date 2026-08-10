@@ -26,13 +26,6 @@ type __CookieOptions = {
   sameSite?: 'Strict' | 'Lax' | 'None'
 };
 
-/** Properties of `<svg-icon>`, from its <script properties> block. */
-export type SvgIconProps = {
-  library: string;
-  name: string;
-  label: string;
-};
-
 /** The `ctx` argument of `root/_layout.html`'s loader. */
 export type RootLayoutContext = {
   url: string;
@@ -215,9 +208,3 @@ export type _404Context = {
 
 /** Data returned by `404`'s <script server> block. */
 export type _404Data = {};
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "svg-icon": HTMLElement;
-  }
-}

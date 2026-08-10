@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run check
+
+      - run: npm run build
+
+      # The step that would have caught a stylesheet 404ing in production: the
+      # build claims dist/static is self-contained, and for this site it is not.
+      # This checks that what actually gets deployed carries every file the
+      # pages ask for.
+      - run: npm run bundle
+
+      - name: Every asset a page references is in the bundle
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import path from "node:path";
+
+            const root = "dist/site";
+            const pages = fs
+              .readdirSync(root, { recursive: true })
+              .filter((f) => f.endsWith(".html"));
+
+            let missing = 0;
+            for (const page of pages) {
+              const html = fs.readFileSync(path.join(root, page), "utf8");
+              for (const [, ref] of html.matchAll(/(?:href|src)="(\/[^"]*)"/g)) {
+                if (ref === "/" || ref.startsWith("//")) continue;
+                if (!fs.existsSync(path.join(root, ref))) {
+                  console.error(`${page} references ${ref}, which is not in the bundle`);
+                  missing += 1;
+                }
+              }
+            }
+
+            if (missing) process.exit(1);
+            console.log(`${pages.length} pages, every referenced asset present`);
+          '

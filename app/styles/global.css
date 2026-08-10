@@ -1,0 +1,835 @@
+/* whispers.news — the page that sells the app.
+ *
+ * A newspaper: condensed display caps, a rule under everything, and a red used
+ * once per screen so it still means "this one".
+ *
+ * No web fonts. Three families over the wire would be the heaviest thing on a
+ * page whose whole argument is that the product is not heavy, and a
+ * third-party font request sits badly under a promise that nothing phones
+ * home. These are the Modern Font Stacks the product itself ships, so the site
+ * runs on the thing it is selling.
+ */
+
+:root {
+  --paper: #ffffff;
+  --stock: #f2f2ef;
+  --ink: #111111;
+  --ink-soft: #5a5a55;
+  --ink-mid: #3c3c37;
+  /* Lc 30 against paper. A row divider is structure, not decoration: it is the
+     only thing separating one line of a pricing table from the next. */
+  --rule: #c7c7c4;
+  --wire: #1a0dab;
+  /* Kept exactly as it was, and deliberately not darkened. Every color here is
+     APCA-checked, and this red reaches Lc 90 on white only as a maroon — which
+     is not a warning color any more. So it is never used for small text: it
+     carries the huge display word, the dot, the rules, and white-on-red
+     badges, all of which pass comfortably. */
+  --flash: #d0021b;
+
+  /* Industrial — a condensed grotesque, already on the machine. */
+  --display: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium',
+    'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+  /* Neo-Grotesque. */
+  --body: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+  /* Monospace Code, for anything that should read as machinery. */
+  --util: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas,
+    'DejaVu Sans Mono', monospace;
+
+  --gut: clamp(1.25rem, 4vw, 3rem);
+  --max: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+a {
+  color: var(--wire);
+}
+
+:focus-visible {
+  outline: 2px solid var(--flash);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.wrap {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+
+.slug {
+  font-family: var(--util);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* 12.8px at weight 500, not 11px at 400. The color could have been crushed
+     to near-black instead, but small uppercase type is hard to read at any
+     contrast, and the fix for small is bigger before it is darker. */
+  color: var(--ink-soft);
+}
+
+.skip {
+  position: absolute;
+  inset-inline-start: -9999px;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  padding: 0.6rem 1rem;
+}
+.skip:focus {
+  inset-inline-start: 0;
+}
+
+/* ── the wire ─────────────────────────────────────────────────────────── */
+
+.wire {
+  background: var(--ink);
+  color: #fff;
+  overflow: hidden;
+  border-bottom: 3px solid var(--flash);
+}
+
+.wire-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 34px;
+}
+
+.wire-tag {
+  flex: 0 0 auto;
+  background: var(--flash);
+  color: #fff;
+  font-family: var(--util);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  padding: 0.5rem 0.75rem;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.wire-track {
+  flex: 1 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent);
+}
+
+.wire-run {
+  display: inline-block;
+  padding-inline-start: 100%;
+  animation: run 40s linear infinite;
+  font-family: var(--util);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: #e7e7e2;
+}
+.wire-run b {
+  color: #fff;
+  font-weight: 700;
+}
+/* The separator is drawn, not typed. Three things follow from that: the lines
+   stay plain strings a person can edit without remembering to add a delimiter,
+   the last one gets no trailing mark, and the glyph never lands in the
+   accessible name — though the whole track is aria-hidden anyway, since every
+   line in it is said again, in place, further down the page. */
+.wire-run b + b::before {
+  content: '///';
+  color: #ccccc8;
+  font-weight: 400;
+  padding-inline: 1.1rem;
+}
+
+@keyframes run {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* A marquee is something to read past, not something to fight. With motion
+   reduced it sits still and shows the first line rather than scrolling. */
+@media (prefers-reduced-motion: reduce) {
+  .wire-run {
+    animation: none;
+    padding-inline-start: 0;
+  }
+}
+
+/* ── masthead ─────────────────────────────────────────────────────────── */
+
+.mast {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.15rem 0 1rem;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--flash);
+  display: inline-block;
+}
+
+.logo i {
+  font-family: var(--util);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: lowercase;
+  align-self: center;
+}
+
+.nav {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  font-family: var(--util);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+.nav a:hover,
+.nav a:focus-visible {
+  border-bottom-color: var(--flash);
+}
+
+/* ── hero ─────────────────────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(2.9rem, 7.2vw, 5.1rem);
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+  margin: 0.9rem 0 0;
+  text-wrap: balance;
+}
+h1 em {
+  font-style: normal;
+  color: var(--flash);
+}
+
+.lede {
+  font-size: 1.16rem;
+  max-width: 34ch;
+  margin: 1.25rem 0 0;
+  color: #2a2a26;
+}
+
+.cta-row {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1.9rem;
+}
+
+.btn {
+  font-family: var(--util);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.4rem;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+}
+.btn-fill {
+  background: var(--ink);
+  color: #fff;
+}
+.btn-fill:hover {
+  background: var(--flash);
+  border-color: var(--flash);
+}
+.btn-line {
+  background: transparent;
+  color: var(--ink);
+}
+.btn-line:hover {
+  background: var(--stock);
+}
+.btn-wide {
+  display: block;
+  text-align: center;
+}
+
+.spec {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+/* ── the demo, which is the product's own layout ──────────────────────── */
+
+.demo-shell {
+  border: 1px solid var(--ink);
+}
+
+.demo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--ink);
+  color: #fff;
+  flex-wrap: wrap;
+}
+.demo-bar .slug {
+  color: #ccccc7;
+}
+
+.chips {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-family: var(--util);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  background: transparent;
+  color: #cfcfc8;
+  border: 1px solid #777774;
+}
+.chip:hover {
+  color: #fff;
+  border-color: #b4b4b0;
+}
+.chip[aria-pressed='true'] {
+  background: #fff;
+  color: var(--ink);
+  border-color: #fff;
+}
+
+/* These tokens are the product's own, carrying the product's own values: six
+   colors and two font stacks, exactly what its admin writes onto <body>.
+   Clicking a preset here performs the same operation as saving in the admin,
+   which is the point — the demo is the thing, not a picture of it. */
+.paper {
+  --d-bg: #fbfaf7;
+  --d-ink: #16150f;
+  --d-link: #1c3f8f;
+  --d-head: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  --d-ui: system-ui, sans-serif;
+  --d-lead: 1.35;
+  --d-pad: 0.62rem;
+
+  /* Structure, not just color. A preset that only repainted would suggest the
+     look is the only thing you get to change, when day headings, sources,
+     times and the rules between lines are all settings too.
+
+     Shown and hidden here rather than added and removed. The product renders
+     nothing at all for a switched-off source — which is right, so a screen
+     reader is not read a line the page does not show — but the demo has no
+     server round trip to re-render through, and the result on screen is the
+     same. */
+  --d-day: block;
+  --d-src: inline;
+  --d-at-short: inline;
+  --d-at-long: none;
+  --d-rule-w: 1px;
+
+  /* Set per preset rather than mixed from the ink, because one percentage
+     cannot serve both polarities: reaching Lc 60 needs about 45% of the ink on
+     a light ground and about 78% on a dark one. Mixing at a single value is
+     what left the dark presets' meta text at Lc 33. */
+  --d-muted: #8a8883;
+  --d-rule: #dedcd9;
+
+  background: var(--d-bg);
+  color: var(--d-ink);
+  font-family: var(--d-head);
+  padding: 1.6rem 1.5rem 1.8rem;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+  min-height: 430px;
+}
+
+.paper-head {
+  text-align: center;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.6rem;
+}
+
+.paper-name {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.paper-tagline {
+  margin: 0.3rem 0 0;
+  font-family: var(--d-ui);
+  font-size: 0.72rem;
+  color: var(--d-muted);
+  font-style: italic;
+}
+
+.paper-day {
+  display: var(--d-day);
+  margin: 1.4rem 0 0.5rem;
+  font-family: var(--d-ui);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--d-muted);
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--d-rule);
+}
+
+.paper-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.paper-list li {
+  padding: var(--d-pad) 0;
+  /* A width, so the style and the color stay written down and only one value
+     changes — the same way the product does it. */
+  border-bottom: var(--d-rule-w) solid var(--d-rule);
+}
+
+.paper-list .head {
+  font-size: 1.05rem;
+  line-height: var(--d-lead);
+  color: var(--d-ink);
+}
+
+.paper-list .src {
+  display: var(--d-src);
+}
+
+.paper-list .at.short {
+  display: var(--d-at-short);
+}
+
+.paper-list .at.long {
+  display: var(--d-at-long);
+}
+
+.paper-list .src,
+.paper-list .at {
+  font-family: var(--d-ui);
+  font-size: 0.72rem;
+  color: var(--d-muted);
+  white-space: nowrap;
+}
+
+.paper-list .src::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.22em;
+  margin-inline: 0.15em 0.45em;
+}
+
+.paper-list .at {
+  margin-inline-start: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.paper-foot .as-link {
+  color: var(--d-link);
+}
+
+.paper-foot {
+  margin-top: 1.2rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--d-rule);
+  font-family: var(--d-ui);
+  font-size: 0.7rem;
+  color: var(--d-muted);
+  display: flex;
+  gap: 1.1rem;
+}
+
+/* ── bands ────────────────────────────────────────────────────────────── */
+
+.band {
+  border-top: 1px solid var(--rule);
+  padding: clamp(2.6rem, 5vw, 4rem) 0;
+}
+.band-stock {
+  background: var(--stock);
+}
+
+h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  line-height: 1;
+  margin: 0.5rem 0 0;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+.band-intro {
+  max-width: 56ch;
+  margin: 0.9rem 0 0;
+  color: #333;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  margin-top: 2.4rem;
+  border-top: 1px solid var(--rule);
+}
+
+.fact {
+  padding: 1.5rem 1.4rem 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  border-inline-end: 1px solid var(--rule);
+}
+.fact:last-child {
+  border-inline-end: 0;
+}
+.fact h3 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.28rem;
+  margin: 0.7rem 0 0.45rem;
+  line-height: 1.05;
+}
+.fact p {
+  margin: 0;
+  font-size: 0.94rem;
+  color: var(--ink-mid);
+}
+
+.steps {
+  margin-top: 2.2rem;
+  display: grid;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.step:first-child {
+  border-top: 1px solid var(--rule);
+}
+/* A filled badge rather than red text. At 12.8px, red on paper reaches Lc 75
+   and needs about 90 — and the red that would get there is a maroon. Reversed,
+   white on the same red is Lc 81 and the number reads as a stamp, which is
+   what a step number wants to look like anyway. */
+.step-n {
+  font-family: var(--util);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #fff;
+  background: var(--flash);
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.4rem;
+  justify-self: start;
+  align-self: start;
+}
+.step h3 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 1.22rem;
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+}
+.step p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-mid);
+  max-width: 62ch;
+}
+
+code {
+  font-family: var(--util);
+  font-size: 0.85rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 0.1rem 0.35rem;
+}
+
+/* ── pricing ──────────────────────────────────────────────────────────── */
+
+.price-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.4rem;
+  align-items: end;
+}
+
+.price-col {
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 0.9rem;
+}
+.price-col.paid {
+  border-bottom-color: var(--flash);
+}
+.price-name {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.price-tag {
+  font-family: var(--util);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.35rem;
+  display: block;
+}
+.price-note {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 0.3rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  text-align: start;
+  font-family: var(--util);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 1.5rem 0 0.4rem;
+}
+
+th,
+td {
+  text-align: start;
+  padding: 0.8rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.93rem;
+  vertical-align: top;
+}
+th {
+  font-weight: 500;
+  width: 44%;
+}
+td {
+  width: 28%;
+  font-family: var(--util);
+  font-size: 0.82rem;
+}
+td.yes {
+  color: var(--ink);
+  font-weight: 700;
+}
+td.no {
+  color: #5c5c5a;
+}
+tbody tr:hover {
+  background: var(--stock);
+}
+.band-stock tbody tr:hover {
+  background: #e9e9e5;
+}
+
+.price-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.6rem;
+  align-items: start;
+}
+.price-cta .fine {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  max-width: 40ch;
+  margin: 0;
+}
+
+/* ── faq ──────────────────────────────────────────────────────────────── */
+
+.faq {
+  margin-top: 2.2rem;
+  border-top: 1px solid var(--rule);
+}
+
+details {
+  border-bottom: 1px solid var(--rule);
+}
+
+summary {
+  cursor: pointer;
+  padding: 1.1rem 0;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.14rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary::after {
+  content: '+';
+  font-family: var(--util);
+  font-weight: 700;
+  color: var(--flash);
+  /* Bigger and bolder than it was, so Lc 75 clears the bar for its size. */
+  font-size: 1.35rem;
+  line-height: 1;
+}
+details[open] summary::after {
+  content: '−';
+}
+details p {
+  margin: 0 0 1.2rem;
+  max-width: 64ch;
+  font-size: 0.96rem;
+  color: var(--ink-mid);
+}
+
+/* ── footer ───────────────────────────────────────────────────────────── */
+
+footer {
+  background: var(--ink);
+  color: #cdcdc6;
+  padding: 2.6rem 0;
+}
+.foot-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+footer a {
+  color: #fff;
+}
+footer .slug {
+  color: #ccccc8;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .price-head,
+  .price-cta {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+  .price-col {
+    border-bottom-width: 2px;
+  }
+  th {
+    width: 50%;
+  }
+  td {
+    width: 25%;
+  }
+}
+
+.demo-note {
+  margin: 0;
+  padding: 0.85rem 1rem 0.95rem;
+  border-top: 1px solid var(--ink);
+  background: var(--stock);
+  font-size: 0.88rem;
+  color: var(--ink-mid);
+}
+
+.demo-note b {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}

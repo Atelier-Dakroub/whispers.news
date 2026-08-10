@@ -1,0 +1,74 @@
+<script server>
+  // Nothing here reads a cookie or a database, so every page under this layout
+  // is written to a file at build time and served as bytes. That is the whole
+  // hosting story for this site: `dist/static` on any static host.
+  export default async () => ({
+    year: 2026,
+    repo: 'https://github.com/Atelier-Dakroub/whispers',
+    siteRepo: 'https://github.com/Atelier-Dakroub/whispers.news',
+    // The ticker's lines, as data rather than markup. They are content — the
+    // shortest, bluntest version of the pitch, and the part most likely to be
+    // rewritten — so they belong somewhere a person can edit without reading
+    // CSS.
+    wire: [
+      'No WordPress, no plugin stack, no database server',
+      'Runs on Node, Bun, Deno or Cloudflare Workers',
+      'The reader’s page ships zero JavaScript',
+      'Free for personal sites',
+      '$99 once for commercial use — unlimited sites either way',
+      'Full source, yours to read and change',
+    ],
+  });
+</script>
+
+<html lang="en" />
+
+<meta name="theme-color" content="#111111" />
+
+<a class="skip" href="#main">Skip to the content</a>
+
+<div class="wire">
+  <div class="wrap wire-inner">
+    <span class="wire-tag">Live</span>
+    <!-- `aria-hidden`, because a marquee read aloud is noise: every line in it
+         is said again, in place, further down the page. -->
+    <div class="wire-track" aria-hidden="true">
+      <div class="wire-run">
+        <b each="line of wire">${line}</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="mast">
+    <a class="logo" href="/">Whispers<i>.news</i></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#demo">Demo</a>
+      <a href="#what">What you get</a>
+      <a href="#build">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Questions</a>
+    </nav>
+  </header>
+</div>
+
+<main id="main"><slot></slot></main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/" style="color: #fff">Whispers<i style="color: #ccccc8">.news</i></a>
+      <p class="slug" style="margin: 0.6rem 0 0">
+        Built with <a href="https://transclude.dev" rel="noopener">Transclude</a> ·
+        <a href="${siteRepo}" rel="noopener">this page's source</a> ·
+        © ${year}
+      </p>
+    </div>
+    <p class="slug">
+      <a href="#demo">Demo</a> · <a href="#pricing">Pricing</a> ·
+      <a href="#faq">Questions</a> ·
+      <a href="${repo}" rel="noopener">Source</a>
+    </p>
+  </div>
+</footer>

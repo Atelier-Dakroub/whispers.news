@@ -1,0 +1,546 @@
+<script server>
+  // The demo's presets. Each one is a real combination of the settings the
+  // product's admin writes: six colors and two font stacks. Nothing here is
+  // invented for the page — a visitor who buys and picks "Night" gets this.
+  //
+  // They reach the browser as data attributes on the chips rather than as a
+  // JSON block, so the values are written once, here, and the script reads
+  // them back off the element it was clicked on.
+  const PRESETS = [
+    {
+      id: 'wire',
+      name: 'Wire',
+      note: 'Everything on. Serif, day headings, sources, times.',
+      bg: '#fbfaf7',
+      ink: '#16150f',
+      link: '#1c3f8f',
+      muted: '#8a8883',
+      ruleColor: '#dedcd9',
+      head: "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif",
+      ui: 'system-ui, sans-serif',
+      lead: '1.35',
+      pad: '0.62rem',
+      day: 'block',
+      src: 'inline',
+      atShort: 'inline',
+      atLong: 'none',
+      rule: '1px',
+    },
+    {
+      id: 'night',
+      name: 'Night',
+      note: 'Dark, no rules between lines, no times. Relaxed.',
+      bg: '#0e1116',
+      ink: '#e6e9ef',
+      link: '#b2cdff',
+      muted: '#afb2b8',
+      ruleColor: '#505459',
+      head: "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif",
+      ui: 'system-ui, sans-serif',
+      lead: '1.5',
+      pad: '0.95rem',
+      day: 'block',
+      src: 'inline',
+      atShort: 'none',
+      atLong: 'none',
+      rule: '0',
+    },
+    {
+      id: 'civic',
+      name: 'Civic',
+      note: 'No day headings, so each line carries its own date. Compact sans.',
+      bg: '#ffffff',
+      ink: '#1d2a3a',
+      link: '#0f5a8f',
+      muted: '#888f99',
+      ruleColor: '#dfe1e4',
+      head: "Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif",
+      ui: 'system-ui, sans-serif',
+      lead: '1.2',
+      pad: '0.4rem',
+      day: 'none',
+      src: 'inline',
+      atShort: 'none',
+      atLong: 'inline',
+      rule: '1px',
+    },
+    {
+      id: 'riot',
+      name: 'Riot',
+      note: 'Headlines and nothing else. No headings, sources, times or rules.',
+      bg: '#101010',
+      ink: '#f2f2f2',
+      link: '#2de69f',
+      muted: '#b2b2b1',
+      ruleColor: '#545353',
+      head: "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
+      ui: "ui-monospace, 'Cascadia Code', Menlo, monospace",
+      lead: '1.5',
+      pad: '0.95rem',
+      day: 'none',
+      src: 'none',
+      atShort: 'none',
+      atLong: 'none',
+      rule: '0',
+    },
+  ];
+
+  // The sample front page. Two days, so the day headings have something to do.
+  const DAYS = [
+    {
+      label: 'Today',
+      items: [
+        { head: 'Council votes 6–1 to keep the ferry running through winter', src: 'County Record', at: '14:20', on: 'Aug 9, 14:20' },
+        { head: 'Dredging permit clears final review after a two-year wait', src: 'Coast Weekly', at: '11:05', on: 'Aug 9, 11:05' },
+        { head: 'Fishermen’s co-op buys the old cannery site', src: 'Harbor Report', at: '08:47', on: 'Aug 9, 08:47' },
+      ],
+    },
+    {
+      label: 'Yesterday',
+      items: [
+        { head: 'School board sets a hearing on the bond measure', src: 'County Record', at: '17:32', on: 'Aug 8, 17:32' },
+        { head: 'Storm damage closes the north jetty walkway', src: 'Marine Bulletin', at: '09:14', on: 'Aug 8, 09:14' },
+        { head: 'What the new dock fees actually cost a small boat', src: 'Analysis', at: '07:50', on: 'Aug 8, 07:50' },
+      ],
+    },
+  ];
+
+  export default async () => ({ presets: PRESETS, days: DAYS, first: PRESETS[0] });
+</script>
+
+<title>Whispers — a headline-only news site you own</title>
+<meta
+  name="description"
+  content="A one-page headline site for niche news. Post a link in seconds, host it anywhere, own the source. Free for personal sites, $99 once for commercial use."
+/>
+<link rel="canonical" href="https://whispers.news/" />
+<meta property="og:title" content="Whispers — a headline-only news site you own" />
+<meta
+  property="og:description"
+  content="Post a link in seconds. Host it anywhere. Own the source. Free for personal sites, $99 once for commercial use."
+/>
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://whispers.news/" />
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <p class="slug">whispers.news · source-available · v1.0</p>
+      <h1>Every story starts as a <em>whisper</em></h1>
+      <p class="lede">
+        A one-page headline site for people who catch stories early. Paste a
+        link, write the headline, publish. Run it on your own hosting and keep
+        the source.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-fill" href="#pricing">Get the source</a>
+        <a class="btn btn-line" href="#demo">See it working</a>
+      </div>
+
+      <div class="spec">
+        <span class="slug">One page</span>
+        <span class="slug">No database server</span>
+        <span class="slug">No client JavaScript</span>
+      </div>
+    </div>
+
+    <!-- The demo is the product's own layout under the product's own class
+         names and tokens, not a drawing of it. Presets change the same custom
+         properties the admin writes, so what a visitor clicks is what they
+         would get. -->
+    <div class="demo-shell" id="demo">
+      <div class="demo-bar">
+        <span class="slug">Your front page — these are starting points</span>
+        <div class="chips" role="group" aria-label="Preview theme">
+          <!-- Each chip carries its own preset. The values live in one place —
+               the loader — and reach the script as data attributes, so there is
+               no second copy of them in JavaScript to drift out of step. -->
+          <button
+            each="preset of presets"
+            type="button"
+            class="chip"
+            data-preset="${preset.id}"
+            data-bg="${preset.bg}"
+            data-ink="${preset.ink}"
+            data-link="${preset.link}"
+            data-muted="${preset.muted}"
+            data-rulec="${preset.ruleColor}"
+            data-head="${preset.head}"
+            data-ui="${preset.ui}"
+            data-lead="${preset.lead}"
+            data-pad="${preset.pad}"
+            data-day="${preset.day}"
+            data-src="${preset.src}"
+            data-atshort="${preset.atShort}"
+            data-atlong="${preset.atLong}"
+            data-rule="${preset.rule}"
+            data-note="${preset.note}"
+            aria-pressed="${preset.id === first.id ? 'true' : 'false'}"
+          >
+            ${preset.name}
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="paper"
+        id="paper"
+        style="--d-bg: ${first.bg}; --d-ink: ${first.ink}; --d-link: ${first.link}; --d-muted: ${first.muted}; --d-rule: ${first.ruleColor}; --d-head: ${first.head}; --d-ui: ${first.ui}; --d-lead: ${first.lead}; --d-pad: ${first.pad}; --d-day: ${first.day}; --d-src: ${first.src}; --d-at-short: ${first.atShort}; --d-at-long: ${first.atLong}; --d-rule-w: ${first.rule}"
+      >
+        <div class="paper-head">
+          <div class="paper-name">Harbor Report</div>
+          <p class="paper-tagline">What the water brought in</p>
+        </div>
+
+        <div each="day of days" key="day.label">
+          <p class="paper-day">${day.label}</p>
+          <ul class="paper-list">
+            <li each="item of day.items" key="item.head">
+              <span class="head">${item.head}</span>
+              <span class="src">${item.src}</span>
+              <!-- Two stamps, one shown. With no day heading above the list
+                   nothing else says which day a story is from, so the product
+                   writes the date into the stamp — and a demo that skipped that
+                   would be showing something the app does not do. -->
+              <time class="at short">${item.at}</time>
+              <time class="at long">${item.on}</time>
+            </li>
+          </ul>
+        </div>
+
+        <div class="paper-foot">
+          <span class="as-link">Feed</span>
+          <span class="as-link">Sign in</span>
+        </div>
+      </div>
+
+      <!-- Said in words as well as shown, because four named buttons look like
+           four themes you get to choose between. They are four saves. -->
+      <p class="demo-note">
+        <b id="demo-note-text">${first.note}</b>
+        Not four themes — four saves. Day headings, sources, times, the rules
+        between lines, the spacing, every color and both fonts are fields in
+        your admin. Set your own and it will look like nothing on this page.
+      </p>
+    </div>
+  </section>
+</div>
+
+<section class="band band-stock" id="what">
+  <div class="wrap">
+    <p class="slug">What you get</p>
+    <h2>A finished site, not a starting point</h2>
+    <p class="band-intro">
+      Everything a headline site needs and nothing it doesn't. The layout, the
+      typography and the admin are already decided, so the work left to you is
+      picking stories.
+    </p>
+
+    <div class="facts">
+      <div class="fact">
+        <p class="slug">Posting</p>
+        <h3>An admin built for links</h3>
+        <p>
+          Paste a URL, write the headline, publish. Tracking parameters are
+          stripped and a link already posted is refused, so the same story never
+          runs twice. Mark one as breaking and it goes to the top in its own
+          color — and stops being breaking on its own, so nothing is still
+          flashing red three days later.
+        </p>
+      </div>
+      <div class="fact">
+        <p class="slug">Look</p>
+        <h3>Every color and font is yours</h3>
+        <p>
+          Eight colors, two font stacks, light and dark, reading density, day
+          headings on or off — all from the admin, with a live preview. It
+          measures what you pick with APCA and tells you when a pair is hard to
+          read, then saves it anyway if that is what you want.
+        </p>
+      </div>
+      <div class="fact">
+        <p class="slug">Hosting</p>
+        <h3>Anywhere JavaScript runs</h3>
+        <p>
+          Node, Bun, Deno or Cloudflare Workers — a VPS, a Raspberry Pi, or the
+          edge, from the same code. A SQLite file by default, with Turso,
+          Postgres and Cloudflare D1 if you would rather. Moving hosts is a copy
+          and a deploy.
+        </p>
+      </div>
+      <div class="fact">
+        <p class="slug">Ownership</p>
+        <h3>The whole source, forever</h3>
+        <p>
+          You get the repository, not an account. Read it, change it, fork it.
+          Nothing phones home, nothing expires, and there is no key to enter.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="build">
+  <div class="wrap">
+    <p class="slug">Getting started</p>
+    <h2>Three steps to a live front page</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-n">01</span>
+        <div>
+          <h3>Clone and install</h3>
+          <p>
+            Pull the repository, run <code>npm install</code> and
+            <code>npm run db:migrate</code>. Node, Bun, Deno and Cloudflare
+            Workers all run the same code.
+          </p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-n">02</span>
+        <div>
+          <h3>Open it and claim the site</h3>
+          <p>
+            The first visitor to an unclaimed site gets a setup page and makes
+            the first account. No seed script, no hash to generate on a command
+            line, nothing to edit before it will let you in.
+          </p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-n">03</span>
+        <div>
+          <h3>Deploy and start posting</h3>
+          <p>
+            Push to your host. The front page is cached and served as bytes, so
+            it holds up on the day a story takes off — which is the only day it
+            matters.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-stock" id="pricing">
+  <div class="wrap">
+    <p class="slug">Pricing</p>
+    <h2>Free for personal sites. $99 if it's a business.</h2>
+    <p class="band-intro">
+      The same code either way, and unlimited sites on both. If your site runs
+      ads, sells sponsorships, or belongs to a company, buy the commercial
+      license. If it's yours for the love of it, take it and go.
+    </p>
+
+    <div class="price-head">
+      <div></div>
+      <div class="price-col">
+        <span class="price-name">Personal</span>
+        <span class="price-tag">$0</span>
+        <p class="price-note">Non-commercial sites</p>
+      </div>
+      <div class="price-col paid">
+        <span class="price-name">Commercial</span>
+        <span class="price-tag">$99</span>
+        <p class="price-note">Once, not per year</p>
+      </div>
+    </div>
+
+    <table>
+      <caption>
+        What's included
+      </caption>
+      <tbody>
+        <tr>
+          <th scope="row">Full source code</th>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Self-host anywhere</th>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Colors, fonts and theming</th>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Sites you can run</th>
+          <td class="yes">Unlimited</td>
+          <td class="yes">Unlimited</td>
+        </tr>
+        <tr>
+          <th scope="row">Ads, sponsorships, business use</th>
+          <td class="no">No</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Updates through v1</th>
+          <td class="yes">Included</td>
+          <td class="yes">Included</td>
+        </tr>
+        <tr>
+          <th scope="row">Support</th>
+          <td class="yes">GitHub issues</td>
+          <td class="yes">Direct email</td>
+        </tr>
+        <tr>
+          <th scope="row">Invoice for your records</th>
+          <td class="no">No</td>
+          <td class="yes">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="price-cta">
+      <p class="fine">
+        Every 1.x update is included, forever. If there is ever a major version
+        it is a separate purchase — and buying within 60 days of its release
+        makes the upgrade free.
+      </p>
+      <div>
+        <a class="btn btn-line btn-wide" href="https://github.com/Atelier-Dakroub/whispers" rel="noopener">Clone it free</a>
+      </div>
+      <div><a class="btn btn-fill btn-wide" href="#">Buy — $99</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq">
+  <div class="wrap">
+    <p class="slug">Questions</p>
+    <h2>Before you buy</h2>
+
+    <div class="faq">
+      <details open>
+        <summary>What counts as commercial?</summary>
+        <p>
+          Money changing hands because of the site. Display ads, sponsored
+          posts, affiliate links, a paid newsletter, or a site owned by a
+          company. A personal or hobby site with none of that is free —
+          including one that gets a lot of traffic.
+        </p>
+      </details>
+      <details>
+        <summary>How many sites can I run?</summary>
+        <p>
+          As many as you want, on either license. There is no key to enter and
+          nothing counting your installs. One purchase covers every site you
+          run, including sites you build for clients.
+        </p>
+      </details>
+      <details>
+        <summary>Can I change the code?</summary>
+        <p>
+          Yes, that is the point. Rewrite the templates, swap the storage layer,
+          bolt on a newsletter. The one thing you cannot do is resell Whispers
+          itself as your own product.
+        </p>
+      </details>
+      <details>
+        <summary>What do I need to run it?</summary>
+        <p>
+          Node, Bun or Deno and somewhere to put it — or a Cloudflare account
+          and nothing else. Data lives in a single SQLite file by default, so
+          there is no database server to set up or pay for. Turso, Postgres and
+          Cloudflare D1 are supported from the same code if you would rather.
+        </p>
+      </details>
+      <details>
+        <summary>Can more than one person post?</summary>
+        <p>
+          Yes. Add people from the admin and each gets their own passphrase,
+          shown once. Removing someone locks them out immediately and does not
+          disturb anybody else — which is the reason the passphrases are not
+          shared.
+        </p>
+      </details>
+      <details>
+        <summary>Do I have to credit Whispers?</summary>
+        <p>
+          A “Powered by Whispers” line renders in the footer by default, and a
+          setting turns it off. The personal license asks you to keep it; the
+          commercial one does not require it. Nothing checks — there is no key
+          to enter and nothing counting installs, so it is your call to make
+          honestly.
+        </p>
+      </details>
+      <details>
+        <summary>Is there a feed?</summary>
+        <p>
+          Yes, at <code>/feed.xml</code>, built from the same headlines and
+          updated as you post. Nothing to configure.
+        </p>
+      </details>
+      <details>
+        <summary>Will I have to buy this again?</summary>
+        <p>
+          Not for what you bought. Your license keeps working forever and every
+          1.x update is included. There may never be a major version at all — if
+          one comes, it is a separate purchase, it happens no more often than
+          once every 18 months, and only when something genuinely breaks
+          compatibility. Buy within 60 days of a major's release and the upgrade
+          is free.
+        </p>
+      </details>
+      <details>
+        <summary>Why not just use WordPress?</summary>
+        <p>
+          You can, and there are good themes for it. Whispers is for people who
+          would rather not run WordPress at all: no plugin updates, no security
+          surface you did not ask for, and a front page that stays fast without
+          a caching stack in front of it.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script>
+  // The demo's only job: write the same custom properties the product's admin
+  // writes. Without it the page still shows a real front page in the first
+  // preset, server-rendered — the chips are the enhancement, not the content.
+  const paper = document.getElementById('paper');
+  const chips = [...document.querySelectorAll('.chip')];
+
+  /** Attribute on the chip -> custom property on the paper. */
+  const TOKENS = {
+    bg: '--d-bg',
+    ink: '--d-ink',
+    link: '--d-link',
+    muted: '--d-muted',
+    rulec: '--d-rule',
+    head: '--d-head',
+    ui: '--d-ui',
+    lead: '--d-lead',
+    pad: '--d-pad',
+    day: '--d-day',
+    src: '--d-src',
+    atshort: '--d-at-short',
+    atlong: '--d-at-long',
+    rule: '--d-rule-w',
+  };
+
+  const note = document.getElementById('demo-note-text');
+
+  if (paper) {
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        for (const [key, property] of Object.entries(TOKENS)) {
+          const value = chip.dataset[key];
+          if (value) paper.style.setProperty(property, value);
+        }
+
+        if (note && chip.dataset.note) note.textContent = chip.dataset.note;
+
+        for (const other of chips) {
+          other.setAttribute('aria-pressed', String(other === chip));
+        }
+      });
+    }
+  }
+</script>

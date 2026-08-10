@@ -819,8 +819,12 @@ footer {
   flex-wrap: wrap;
   align-items: baseline;
 }
+/* The same red underline sits at APCA Lc 26 against the footer's near-black,
+   under the 30 a non-text mark needs — so it is lightened just enough to clear
+   it and stay red. */
 footer a {
   color: #fff;
+  text-decoration-color: #d93044;
 }
 footer .slug {
   color: #ccccc8;

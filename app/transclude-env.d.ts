@@ -62,6 +62,7 @@ export type RootLayoutData = {
   year: number;
   repo: string;
   siteRepo: string;
+  buy: string;
   wire: string[];
 };
 
@@ -78,6 +79,7 @@ export type IndexContext = {
     year: number;
     repo: string;
     siteRepo: string;
+    buy: string;
     wire: string[];
   };
   request: Request | null;
@@ -96,6 +98,7 @@ export type IndexContext = {
 
 /** Data returned by `index`'s <script server> block. */
 export type IndexData = {
+  buy: string;
   presets: {
     id: string;
     name: string;
@@ -158,6 +161,7 @@ export type _404Context = {
     year: number;
     repo: string;
     siteRepo: string;
+    buy: string;
     wire: string[];
   };
   request: Request | null;

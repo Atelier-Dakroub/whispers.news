@@ -6,6 +6,17 @@
     year: 2026,
     repo: 'https://github.com/Atelier-Dakroub/whispers',
     siteRepo: 'https://github.com/Atelier-Dakroub/whispers.news',
+    // The Polar checkout, in one place because it appears in more than one.
+    //
+    // Created in the Polar dashboard (Products -> Checkout Links) and pasted
+    // here; there is no API for making one, so it is a constant rather than
+    // something built at render time. Polar is the merchant of record, which is
+    // what supplies the invoice the pricing table promises and takes sales tax
+    // and VAT off your desk.
+    //
+    // Optional query parameters Polar reads, if a campaign ever wants them:
+    // customer_email, discount_code, theme, reference_id and the utm_* set.
+    buy: 'https://buy.polar.sh/REPLACE_WITH_YOUR_CHECKOUT_LINK',
     // The ticker's lines, as data rather than markup. They are content — the
     // shortest, bluntest version of the pitch, and the part most likely to be
     // rewritten — so they belong somewhere a person can edit without reading

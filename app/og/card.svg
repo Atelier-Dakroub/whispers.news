@@ -1,0 +1,48 @@
+<!-- The share card, at the size every scraper crops to: 1200 by 630.
+     Source, not output. `npm run og` renders app/public/og.png from this.
+
+     It is drawn as the product rather than as a poster: a masthead, a day
+     heading, three headline rows with rules. Somebody who sees the card in
+     Slack has already been shown what they would be buying.
+
+     Text is drawn with fonts that exist on macOS, because rsvg-convert uses
+     the system's. If you regenerate this on another machine, check the PNG
+     before committing it — a missing face falls back silently. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ffffff" />
+
+  <!-- The red rule is the site's one accent, and it anchors the crop. -->
+  <rect x="0" y="0" width="1200" height="14" fill="#d0021b" />
+
+  <g font-family="DIN Alternate, Bahnschrift, Helvetica Neue, Arial, sans-serif">
+    <text x="90" y="150" font-size="72" font-weight="700" fill="#111111"
+      letter-spacing="-1.5">whispers.news</text>
+  </g>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif">
+    <text x="90" y="205" font-size="30" fill="#5a5a55">A headline-only news site you own</text>
+  </g>
+
+  <!-- The product, drawn at the size it reads at. -->
+  <g font-family="Helvetica Neue, Arial, sans-serif">
+    <text x="90" y="300" font-size="19" font-weight="700" fill="#5a5a55"
+      letter-spacing="2.2">TODAY</text>
+    <rect x="90" y="316" width="1020" height="2" fill="#c7c7c4" />
+
+    <text x="90" y="366" font-size="30" fill="#111111">Harbour closed as the swell builds</text>
+    <text x="90" y="396" font-size="17" fill="#5a5a55">marinebulletin.example</text>
+    <rect x="90" y="418" width="1020" height="1" fill="#c7c7c4" />
+
+    <text x="90" y="466" font-size="30" fill="#111111">Ferry timetables change from Monday</text>
+    <text x="90" y="496" font-size="17" fill="#5a5a55">islandwire.example</text>
+    <rect x="90" y="518" width="1020" height="1" fill="#c7c7c4" />
+
+    <text x="90" y="566" font-size="30" fill="#111111">The bridge reopens ahead of schedule</text>
+  </g>
+
+  <!-- Price, right-aligned, where a card's eye lands last. -->
+  <g font-family="Helvetica Neue, Arial, sans-serif" text-anchor="end">
+    <text x="1110" y="150" font-size="34" font-weight="700" fill="#111111">Free for personal</text>
+    <text x="1110" y="192" font-size="26" fill="#5a5a55">$99 once for commercial</text>
+  </g>
+</svg>

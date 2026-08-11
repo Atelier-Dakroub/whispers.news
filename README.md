@@ -45,6 +45,28 @@ never fire for `/` without `run_worker_first` — and that would put a script in
 front of every request to the real site to serve a hostname nobody should land
 on twice.
 
+## The share card
+
+`app/og/card.svg` is the source. `app/public/og.png` is what ships, and it is
+committed rather than built, so neither CI nor a fresh clone needs a converter.
+
+```sh
+brew install librsvg    # once
+npm run og              # after editing the SVG
+```
+
+Check the PNG before you commit it. `rsvg-convert` draws with the fonts on the
+machine, so a face that is missing falls back without a warning.
+
+The card is drawn as the product — a masthead, a day heading, headline rows with
+their sources — so somebody who meets it in Slack has already seen what is for
+sale. 1200 by 630 is the size every scraper crops to. It must stay PNG: most
+scrapers will not render an SVG.
+
+**No scraper can see any of this while the site is behind the password.**
+Facebook, X, Slack and iMessage all get a 401, so every preview is blank until
+the gate comes off. Validate the card after launch, not before.
+
 ## The password
 
 `gate.js` puts basic auth in front of everything while the site is unlaunched.

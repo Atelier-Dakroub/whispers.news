@@ -10,7 +10,8 @@
     "check": "transclude-check",
     "bundle": "node scripts/bundle-static.js",
     "deploy": "npm run build && npm run bundle && wrangler deploy",
-    "deploy:www": "wrangler deploy -c wrangler.www.jsonc"
+    "deploy:www": "wrangler deploy -c wrangler.www.jsonc",
+    "og": "rsvg-convert -w 1200 -h 630 app/og/card.svg -o app/public/og.png"
   },
   "dependencies": {
     "@transclude/core": "^0.10.0"

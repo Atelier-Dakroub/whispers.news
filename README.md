@@ -63,25 +63,9 @@ their sources — so somebody who meets it in Slack has already seen what is for
 sale. 1200 by 630 is the size every scraper crops to. It must stay PNG: most
 scrapers will not render an SVG.
 
-**No scraper can see any of this while the site is behind the password.**
-Facebook, X, Slack and iMessage all get a 401, so every preview is blank until
-the gate comes off. Validate the card after launch, not before.
-
-## The password
-
-`gate.js` puts basic auth in front of everything while the site is unlaunched.
-It is the same `run_worker_first` point from the other direction: without that
-flag, Cloudflare serves every real file straight from the asset store and the
-gate applies only to the 404s.
-
-```sh
-npx wrangler secret put SITE_PASSWORD    # no redeploy needed
-```
-
-A missing `SITE_PASSWORD` leaves the site open rather than locking you out of
-it. **To launch:** delete `main` and `run_worker_first` from `wrangler.jsonc`
-and redeploy. Note that `/thanks` — where Polar returns buyers — is behind the
-gate too, so this has to come off before the first sale.
+Validate the card against Facebook, X, Slack and iMessage after a deploy — each
+one caches what it fetched, so a fix to the PNG is not the same as a fix to the
+preview they already hold.
 
 ## Selling it
 

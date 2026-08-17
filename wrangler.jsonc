@@ -4,20 +4,10 @@
   "name": "whispers-news",
   "compatibility_date": "2026-01-01",
 
-  // Every page here is prerendered, so this would be a static asset worker with
-  // no script at all. `gate.js` is the exception, and it is temporary: a
-  // password in front of the site until it launches. Remove `main` and
-  // `run_worker_first` below to go back to serving files and nothing else.
-  "main": "gate.js",
-
+  // Every page here is prerendered, so there is no `main`: this is a static
+  // asset worker and nothing else runs in front of the files.
   "assets": {
     "directory": "./dist/site",
-    // How gate.js reaches the files once it is satisfied.
-    "binding": "ASSETS",
-    // Required, and the whole point: assets are served ahead of the script by
-    // default, so without this every real page would skip the gate and only
-    // the 404s would ask for a password.
-    "run_worker_first": true,
     // Serve the built 404 page rather than Cloudflare's own.
     "not_found_handling": "404-page",
     // Matches `trailingSlash: 'never'` in transclude.config.js. Cloudflare's

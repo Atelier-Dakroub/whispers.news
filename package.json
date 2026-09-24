@@ -14,10 +14,10 @@
     "og": "rsvg-convert -w 1200 -h 630 app/og/card.svg -o app/public/og.png"
   },
   "dependencies": {
-    "@transclude/core": "^0.10.0"
+    "@transclude/core": "^1.1.1"
   },
   "devDependencies": {
-    "typescript": "^5.9",
+    "typescript": "^7.0.2",
     "vite": "^8",
     "wrangler": "^4.115.0"
   }
